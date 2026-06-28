@@ -25,7 +25,7 @@ export default function SocialIntro() {
           <div className="social-intro__visual">
             <div className="social-intro__image">
               <img
-                src="https://images.pexels.com/photos/6077814/pexels-photo-6077814.jpeg?auto=compress&cs=tinysrgb&w=600"
+                src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600"
                 alt="Social media marketing analytics"
                 loading="lazy"
               />

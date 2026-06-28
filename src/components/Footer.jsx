@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 export default function Footer() {
+  const [showPopup, setShowPopup] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
@@ -21,7 +23,7 @@ export default function Footer() {
 
   const handleNewsletter = (e) => {
     e.preventDefault();
-    alert('Subscribed successfully!');
+    setShowPopup(true);
   };
 
   return (
@@ -31,8 +33,11 @@ export default function Footer() {
         <div className="footer__grid">
           <div className="footer__col footer__col--brand">
             <Link to="/" className="footer__logo">
-              <span className="footer__logo-text">CLUVEX</span>
-              <span className="footer__logo-sub">Digital Solutions</span>
+              <img className="footer__logo-icon" src="/cluvex-icon.png" alt="Cluvex" width="40" height="40" />
+              <div className="footer__logo-text-wrapper">
+                <span className="footer__logo-text">CLUVEX</span>
+                <span className="footer__logo-sub">Digital Solutions</span>
+              </div>
             </Link>
             <p>
               Cluvex Digital Solutions is a premier digital marketing agency in Dubai,
@@ -85,10 +90,30 @@ export default function Footer() {
       </div>
 
       <div className="footer__bottom">
-        <div className="container">
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
           <p>&copy; {new Date().getFullYear()} Cluvex Digital Solutions. All rights reserved.</p>
+          <div className="footer__bottom-links" style={{ display: 'flex', gap: '15px' }}>
+            <Link to="/privacy-policy" style={{ color: 'var(--gray-text)', fontSize: '14px' }} onMouseEnter={(e) => e.target.style.color = 'var(--primary-gold)'} onMouseLeave={(e) => e.target.style.color = 'var(--gray-text)'}>Privacy Policy</Link>
+            <Link to="/terms-and-conditions" style={{ color: 'var(--gray-text)', fontSize: '14px' }} onMouseEnter={(e) => e.target.style.color = 'var(--primary-gold)'} onMouseLeave={(e) => e.target.style.color = 'var(--gray-text)'}>Terms & Conditions</Link>
+            <Link to="/disclaimer" style={{ color: 'var(--gray-text)', fontSize: '14px' }} onMouseEnter={(e) => e.target.style.color = 'var(--primary-gold)'} onMouseLeave={(e) => e.target.style.color = 'var(--gray-text)'}>Disclaimer</Link>
+            <Link to="/refund-policy" style={{ color: 'var(--gray-text)', fontSize: '14px' }} onMouseEnter={(e) => e.target.style.color = 'var(--primary-gold)'} onMouseLeave={(e) => e.target.style.color = 'var(--gray-text)'}>Refund Policy</Link>
+          </div>
         </div>
       </div>
+
+      {showPopup && (
+        <div className="quote-popup-overlay" onClick={() => setShowPopup(false)}>
+          <div className="quote-popup" onClick={(e) => e.stopPropagation()}>
+            <button className="quote-popup__close" onClick={() => setShowPopup(false)}>&times;</button>
+            <div className="quote-popup__icon">
+              <i className="fas fa-check-circle" />
+            </div>
+            <h3>Subscribed!</h3>
+            <p>You have successfully subscribed to our newsletter.</p>
+            <button className="gold-btn" onClick={() => setShowPopup(false)}>OK</button>
+          </div>
+        </div>
+      )}
     </footer>
   );
 }

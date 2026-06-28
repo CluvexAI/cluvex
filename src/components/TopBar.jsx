@@ -3,11 +3,11 @@ export default function TopBar() {
     <div className="topbar">
       <div className="container topbar__inner">
         <div className="topbar__info">
-          <span><i className="fas fa-envelope" /> info@cluvex.com</span>
+          <a href="mailto:info@cluvex.com"><i className="fas fa-envelope" /> info@cluvex.com</a>
           <span className="topbar__divider">|</span>
           <span><i className="fas fa-map-marker-alt" /> Dubai, UAE</span>
           <span className="topbar__divider">|</span>
-          <span><i className="fas fa-phone-alt" /> +971 52 675 0642</span>
+          <a href="tel:+971526750642" className="topbar__phone"><i className="fas fa-phone-alt" /> +971 52 675 0642</a>
         </div>
         <div className="topbar__social">
           <a href="#" aria-label="Facebook"><i className="fab fa-facebook-f" /></a>

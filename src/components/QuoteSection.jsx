@@ -1,7 +1,11 @@
+import { useState } from 'react';
+
 export default function QuoteSection() {
+  const [showPopup, setShowPopup] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Thank you! We will get back to you shortly.');
+    setShowPopup(true);
   };
 
   return (
@@ -67,6 +71,20 @@ export default function QuoteSection() {
           </div>
         </div>
       </div>
+
+      {showPopup && (
+        <div className="quote-popup-overlay" onClick={() => setShowPopup(false)}>
+          <div className="quote-popup" onClick={(e) => e.stopPropagation()}>
+            <button className="quote-popup__close" onClick={() => setShowPopup(false)}>&times;</button>
+            <div className="quote-popup__icon">
+              <i className="fas fa-check-circle" />
+            </div>
+            <h3>Thank You!</h3>
+            <p>We will get back to you shortly.</p>
+            <button className="gold-btn" onClick={() => setShowPopup(false)}>OK</button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "eliteglamm"
+  },
+  "targets": {
+    "eliteglamm": {
+      "hosting": {
+        "main": [
+          "cluvex"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

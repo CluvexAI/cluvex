@@ -22,10 +22,20 @@
   flex-wrap: wrap;
 }
 
-.topbar__info span {
+.topbar__info span,
+.topbar__info a {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+}
+
+.topbar__info a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.topbar__info a:hover {
+  color: var(--primary-gold);
 }
 
 .topbar__info i {
@@ -91,9 +101,20 @@
 
 .navbar__logo {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   cursor: pointer;
   flex-shrink: 0;
+  text-decoration: none;
+}
+
+.navbar__logo-icon {
+  flex-shrink: 0;
+}
+
+.navbar__logo-text-wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .navbar__logo-text {
@@ -1646,6 +1667,69 @@
   object-fit: cover;
 }
 
+.quote-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.quote-popup {
+  background: #fff;
+  border-radius: 16px;
+  padding: 48px 40px 36px;
+  text-align: center;
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+  animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.quote-popup__close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #999;
+  line-height: 1;
+}
+
+.quote-popup__close:hover {
+  color: #333;
+}
+
+.quote-popup__icon {
+  font-size: 56px;
+  color: var(--primary-gold);
+  margin-bottom: 12px;
+}
+
+.quote-popup h3 {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--primary-dark);
+  margin-bottom: 8px;
+}
+
+.quote-popup p {
+  font-size: 15px;
+  color: #666;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
 @media (max-width: 968px) {
   .quote-section__grid {
     grid-template-columns: 1fr;
@@ -1765,8 +1849,19 @@
 
 .footer__logo {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 16px;
+  text-decoration: none;
+}
+
+.footer__logo-icon {
+  flex-shrink: 0;
+}
+
+.footer__logo-text-wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .footer__logo-text {
@@ -7897,4 +7992,13 @@
   .sem-cta__inner p {
     font-size: 15px;
   }
+}
+
+/* Privacy Policy Navbar Link */
+.navbar__dropdown-menu a.privacy-policy-link {
+  color: #2f1c17 !important;
+}
+
+.navbar__dropdown-menu a.privacy-policy-link:hover {
+  color: #dfb585 !important;
 }

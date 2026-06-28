@@ -14,6 +14,10 @@ import WhyUsPage from './pages/WhyUsPage';
 import ContactPage from './pages/ContactPage';
 import SocialMediaMarketingPage from './pages/SocialMediaMarketingPage';
 import SearchEngineMarketingPage from './pages/SearchEngineMarketingPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
+import DisclaimerPolicyPage from './pages/DisclaimerPolicyPage';
+import RefundPolicyPage from './pages/RefundPolicyPage';
 import './App.css';
 
 function ScrollToHash() {
@@ -48,6 +52,10 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/services/social-media-marketing" element={<SocialMediaMarketingPage />} />
         <Route path="/services/search-engine-marketing" element={<SearchEngineMarketingPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
+        <Route path="/disclaimer" element={<DisclaimerPolicyPage />} />
+        <Route path="/refund-policy" element={<RefundPolicyPage />} />
       </Routes>
       <Footer />
     </>

@@ -5,6 +5,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [knowMoreOpen, setKnowMoreOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -20,6 +21,7 @@ export default function Navbar() {
     e.preventDefault();
     setMenuOpen(false);
     setServicesOpen(false);
+    setKnowMoreOpen(false);
     if (target === 'home') {
       navigate('/');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -28,6 +30,9 @@ export default function Navbar() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (target === 'why-us') {
       navigate('/why-us');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (target === 'know-more') {
+      navigate('/know-more');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (target === 'contact') {
       navigate('/contact');
@@ -47,6 +52,7 @@ export default function Navbar() {
   const handleCtaClick = () => {
     setMenuOpen(false);
     setServicesOpen(false);
+    setKnowMoreOpen(false);
     navigate('/contact');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -55,6 +61,7 @@ export default function Navbar() {
     { label: 'Home', target: 'home' },
     { label: 'About', target: 'about' },
     { label: 'Services', target: 'services', dropdown: true },
+    { label: 'KNOW MORE', target: 'know-more', dropdown: true },
     { label: 'Why Us', target: 'why-us' },
     { label: 'Contact', target: 'contact' },
   ];
@@ -69,14 +76,25 @@ export default function Navbar() {
     { label: 'Search Engine Marketing', path: '/services/search-engine-marketing' },
   ];
 
+  const knowMorePages = [
+    { label: 'Privacy Policy', path: '/privacy-policy' },
+    { label: 'Terms & Conditions', path: '/terms-and-conditions' },
+    { label: 'Disclaimer Policy', path: '/disclaimer' },
+    { label: 'Refund Policy', path: '/refund-policy' },
+  ];
+
   const isServicePage = location.pathname.startsWith('/services/');
+  const isKnowMorePage = location.pathname === '/privacy-policy' || location.pathname === '/terms-and-conditions' || location.pathname === '/disclaimer' || location.pathname === '/refund-policy';
 
   return (
     <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
       <div className="container navbar__inner">
         <Link to="/" className="navbar__logo" onClick={() => { setMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-          <span className="navbar__logo-text">CLUVEX</span>
-          <span className="navbar__logo-sub">Digital Solutions</span>
+          <img className="navbar__logo-icon" src="/cluvex-icon.png" alt="Cluvex" width="36" height="36" />
+          <div className="navbar__logo-text-wrapper">
+            <span className="navbar__logo-text">CLUVEX</span>
+            <span className="navbar__logo-sub">Digital Solutions</span>
+          </div>
         </Link>
 
         <button
@@ -95,35 +113,43 @@ export default function Navbar() {
                 ? location.pathname === '/about'
                 : l.target === 'why-us'
                   ? location.pathname === '/why-us'
-                  : l.target === 'contact'
+                  : l.target === 'know-more'
+                    ? location.pathname === '/know-more'
+                    : l.target === 'contact'
                     ? location.pathname === '/contact'
                     : l.dropdown
-                      ? isServicePage
+                      ? (l.target === 'services' ? isServicePage : isKnowMorePage)
                       : false;
+                      
+            const isOpen = l.target === 'services' ? servicesOpen : l.target === 'know-more' ? knowMoreOpen : false;
+            const setOpen = l.target === 'services' ? setServicesOpen : l.target === 'know-more' ? setKnowMoreOpen : () => {};
+            const pages = l.target === 'services' ? servicePages : l.target === 'know-more' ? knowMorePages : [];
+            const isPageActive = l.target === 'services' ? isServicePage : l.target === 'know-more' ? isKnowMorePage : false;
+
             return (
               <li
                 key={l.target}
                 className={l.dropdown ? 'navbar__dropdown' : ''}
-                onMouseEnter={() => l.dropdown && setServicesOpen(true)}
-                onMouseLeave={() => l.dropdown && setServicesOpen(false)}
+                onMouseEnter={() => l.dropdown && setOpen(true)}
+                onMouseLeave={() => l.dropdown && setOpen(false)}
               >
                 {l.dropdown ? (
                   <>
                     <button
-                      className={`navbar__dropdown-btn ${isServicePage ? 'active' : ''}`}
-                      onClick={() => setServicesOpen(!servicesOpen)}
+                      className={`navbar__dropdown-btn ${isPageActive ? 'active' : ''}`}
+                      onClick={() => setOpen(!isOpen)}
                     >
                       {l.label} <i className="fas fa-chevron-down" />
                     </button>
-                    <ul className={`navbar__dropdown-menu ${servicesOpen ? 'navbar__dropdown-menu--open' : ''}`}>
-                      {servicePages.map((sp) => (
-                        <li key={sp.path}>
+                    <ul className={`navbar__dropdown-menu ${isOpen ? 'navbar__dropdown-menu--open' : ''}`}>
+                      {pages.map((p) => (
+                        <li key={p.path}>
                           <Link
-                            to={sp.path}
-                            className={location.pathname === sp.path ? 'active' : ''}
-                            onClick={() => { setMenuOpen(false); setServicesOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                            to={p.path}
+                            className={`${location.pathname === p.path ? 'active' : ''} ${l.target === 'know-more' ? 'privacy-policy-link' : ''}`.trim()}
+                            onClick={() => { setMenuOpen(false); setOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                           >
-                            {sp.label}
+                            {p.label}
                           </Link>
                         </li>
                       ))}
@@ -131,7 +157,7 @@ export default function Navbar() {
                   </>
                 ) : (
                   <a
-                    href={l.target === 'home' ? '/' : l.target === 'about' ? '/about' : l.target === 'why-us' ? '/why-us' : l.target === 'contact' ? '/contact' : `/#${l.target}`}
+                    href={l.target === 'home' ? '/' : l.target === 'about' ? '/about' : l.target === 'why-us' ? '/why-us' : l.target === 'know-more' ? '/know-more' : l.target === 'contact' ? '/contact' : `/#${l.target}`}
                     className={isActive ? 'active' : ''}
                     onClick={(e) => handleNavClick(e, l.target)}
                   >
